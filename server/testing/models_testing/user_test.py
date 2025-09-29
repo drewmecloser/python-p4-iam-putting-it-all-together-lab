@@ -90,7 +90,11 @@ class TestUser:
             User.query.delete()
             db.session.commit()
 
+            # FIX: Initialize with only username (since password_hash is not a mapped column)
             user = User(username="Prabhdip")
+            
+            # NEW STEP: Set password hash separately, which triggers the setter method
+            user.password_hash = "testpassword"
 
             recipe_1 = Recipe(
                 title="Delicious Shed Ham",
@@ -107,11 +111,11 @@ class TestUser:
             recipe_2 = Recipe(
                 title="Hasty Party Ham",
                 instructions="""As am hastily invited settled at limited""" + \
-                             """ civilly fortune me. Really spring in extent""" + \
-                             """ an by. Judge but built gay party world. Of""" + \
-                             """ so am he remember although required. Bachelor""" + \
-                             """ unpacked be advanced at. Confined in declared""" + \
-                             """ marianne is vicinity.""",
+                            """ civilly fortune me. Really spring in extent""" + \
+                            """ an by. Judge but built gay party world. Of""" + \
+                            """ so am he remember although required. Bachelor""" + \
+                            """ unpacked be advanced at. Confined in declared""" + \
+                            """ marianne is vicinity.""",
                 minutes_to_complete=30,
                 )
 
